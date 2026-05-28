@@ -1,26 +1,230 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
+/* ============================================================
+   daviaviss — design system tokens v2
+   Warm cinematic palette (portrait-derived) + terminal/editorial
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --espresso-950: #0f0804;
+  --espresso-900: #1a0f0a;
+  --espresso-800: #2a1a12;
+  --espresso-700: #3a1f14;
+  --espresso-600: #5a3425;
+
+  --sienna-700: #a8421d;
+  --sienna-600: #c4521f;
+  --sienna-500: #d96a3a;
+  --sienna-400: #e8885a;
+  --sienna-300: #f2a882;
+
+  --cream-100: #f5ece0;
+  --cream-200: #e8dcc8;
+  --cream-300: #d4c4ac;
+
+  --ink-900: #1a1410;
+  --ink-700: #4a3e33;
+  --ink-500: #8a7a66;
+
+  --paper-50:  #faf6ef;
+  --paper-100: #f2ebdd;
+  --paper-200: #e8dfc9;
+
+  --signal-green: #8fa872;
+  --signal-red:   #c4523a;
+  --signal-blue:  #6b7a9a;
+
+  color-scheme: dark;
+
+  --bg:           var(--espresso-950);
+  --bg-raised:    var(--espresso-900);
+  --bg-elevated:  var(--espresso-800);
+  --border:       var(--espresso-700);
+  --border-soft:  rgba(245, 236, 224, 0.08);
+
+  --fg-1:         var(--cream-100);
+  --fg-2:         var(--cream-300);
+  --fg-3:         var(--ink-500);
+  --fg-inverse:   var(--ink-900);
+
+  --accent:       var(--sienna-500);
+  --accent-hover: var(--sienna-400);
+  --accent-press: var(--sienna-700);
+  --accent-soft:  rgba(217, 106, 58, 0.15);
+
+  --focus-ring:   var(--sienna-400);
+  --nav-bg:       rgba(15, 8, 4, 0.88);
+  --status-bg:    rgba(15, 8, 4, 0.88);
+  --hero-glow-opacity: 1;
+
+  --font-display: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
+  --font-sans:    "IBM Plex Sans", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    "IBM Plex Mono", "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  --fs-micro:   11px;
+  --fs-caption: 13px;
+  --fs-body:    15px;
+  --fs-body-lg: 17px;
+  --fs-h4:      20px;
+  --fs-h3:      28px;
+  --fs-h2:      clamp(36px, 4vw, 56px);
+  --fs-h1:      clamp(56px, 8vw, 120px);
+  --fs-display: clamp(80px, 14vw, 220px);
+
+  --lh-tight: 1.02;
+  --lh-snug:  1.15;
+  --lh-body:  1.5;
+  --lh-loose: 1.7;
+
+  --tracking-tight:   -0.02em;
+  --tracking-display: -0.04em;
+  --tracking-mono:    0;
+  --tracking-wide:    0.08em;
+  --tracking-wider:   0.18em;
+
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  --r-0:    0;
+  --r-1:    2px;
+  --r-2:    4px;
+  --r-3:    8px;
+  --r-full: 999px;
+
+  --shadow-1: 0 1px 0 rgba(26, 15, 10, 0.4);
+  --shadow-2: 0 6px 24px -8px rgba(10, 5, 2, 0.6);
+  --shadow-3: 0 24px 60px -20px rgba(10, 5, 2, 0.8);
+  --glow-warm: 0 0 40px -8px rgba(217, 106, 58, 0.35);
+
+  --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-pop:    cubic-bezier(0.5, 1.8, 0.4, 1);
+  --dur-fast:    140ms;
+  --dur-base:    240ms;
+  --dur-slow:    420ms;
+  --dur-scene:   700ms;
+
+  --grain: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.06 0 0 0 0 0.03 0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg:          var(--paper-50);
+  --bg-raised:   var(--paper-100);
+  --bg-elevated: #fff;
+  --border:      var(--paper-200);
+  --border-soft: rgba(26, 20, 16, 0.08);
+  --fg-1: var(--ink-900);
+  --fg-2: var(--ink-700);
+  --fg-3: var(--ink-500);
+  --fg-inverse: var(--cream-100);
+  --accent:       var(--sienna-600);
+  --accent-hover: var(--sienna-500);
+  --accent-press: var(--sienna-700);
+  --accent-soft:  rgba(196, 82, 31, 0.12);
+  --nav-bg:       rgba(250, 246, 239, 0.92);
+  --status-bg:    rgba(250, 246, 239, 0.92);
+  --hero-glow-opacity: 0.4;
+  --shadow-1: 0 1px 0 rgba(26, 20, 16, 0.08);
+  --shadow-2: 0 6px 24px -8px rgba(58, 31, 20, 0.15);
+  --shadow-3: 0 24px 60px -20px rgba(58, 31, 20, 0.25);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg:           var(--bg);
+  --color-bg-raised:    var(--bg-raised);
+  --color-bg-elevated:  var(--bg-elevated);
+  --color-border:       var(--border);
+  --color-fg-1:         var(--fg-1);
+  --color-fg-2:         var(--fg-2);
+  --color-fg-3:         var(--fg-3);
+  --color-accent:       var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-signal-green: var(--signal-green);
+  --color-espresso-950: var(--espresso-950);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar { display: none; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
 }
+
+::selection {
+  background: var(--accent);
+  color: var(--espresso-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--fg-1);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+a:hover { color: var(--accent); }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.94) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.22; }
+  50%       { opacity: 0.38; }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Stack card light mode — pastel warm tint matching Projects cards */
+[data-theme="light"] .stack-group-card {
+  background: var(--bg-raised);
+  box-shadow: 0 1px 3px rgba(90, 52, 37, 0.06);
+}
+
+[data-theme="light"] .stack-group-card:hover {
+  background: var(--bg-elevated);
+}
+

@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "/",
+    "about": "about",
+    "stack": "stack",
+    "exp": "exp",
+    "projetos": "projetos",
+    "contato": "contato"
+  },
+  "hero": {
+    "badge": "disponível para projetos",
+    "headline1": "davi,",
+    "headline2": "dev",
+    "headline3": "&",
+    "headline4": "entusiasta.",
+    "lead": "construo interfaces impactantes — next, expo, react. atualmente desenvolvedor pleno na",
+    "company": "ci&t",
+    "cta1": "▸ ver projetos",
+    "cta2": "me escreva →",
+    "palette": "paleta de comandos",
+    "scroll": "rolar"
+  },
+  "about": {
+    "label": "sobre",
+    "title": "quem sou.",
+    "p1": "meu nome é davi augusto vissotto.",
+    "p2": "comecei a programar em 2019, quando me interessei por um livro de html. nunca mais parei. hoje curso sistemas de informação na ufsc e trabalho com frontend na ci&t.",
+    "p3": "trabalho com next, expo e react. acredito que colaboração é o que transforma boas ideias em produtos reais. prefiro trabalhar em projetos que causem um impacto positivo na sociedade.",
+    "location": "florianópolis · sc · br"
+  },
+  "projects": {
+    "label": "projetos",
+    "title": "o que construí.",
+    "featured": "destaque",
+    "wip": "em breve"
+  },
+  "stack": {
+    "label": "ferramentas",
+    "title": "stack principal.",
+    "groups": {
+      "frameworks": "frameworks",
+      "languages": "linguagens",
+      "styling": "estilos",
+      "tools": "ferramentas"
+    }
+  },
+  "experience": {
+    "label": "experiência",
+    "title": "minha trajetória.",
+    "education": "formação",
+    "current": "atual"
+  },
+  "contact": {
+    "label": "contato",
+    "title": "me escreva.",
+    "direct": "— direto",
+    "elsewhere": "— em outros lugares",
+    "copy": "copiar",
+    "copied": "✓ copiado"
+  },
+  "palette": {
+    "placeholder": "comandos, seções, ações...",
+    "navigate": "↑↓ navegar",
+    "select": "↵ selecionar",
+    "close": "esc fechar",
+    "notFound": "- nada encontrado",
+    "commands": {
+      "home": "▸ início",
+      "homeHint": "ir para o início",
+      "about": "▸ sobre",
+      "aboutHint": "quem sou",
+      "stack": "▸ stack",
+      "stackHint": "minha stack",
+      "exp": "▸ experiência",
+      "expHint": "minha trajetória",
+      "projetos": "▸ projetos",
+      "projetosHint": "o que construí",
+      "contato": "▸ contato",
+      "contatoHint": "me escreva",
+      "email": "⧉ email",
+      "emailHint": "daviaugustovissotto@gmail.com",
+      "linkedin": "↗ linkedin",
+      "linkedinHint": "/in/daviaviss",
+      "github": "↗ github",
+      "githubHint": "@daviaviss",
+      "instagram": "↗ instagram",
+      "instagramHint": "@daviaviss",
+      "whatsapp": "↗ whatsapp",
+      "whatsappHint": "+55 48 98461-6370",
+      "theme": "◑ alternar tema",
+      "themeHint": "escuro / claro",
+      "lang": "◎ english",
+      "langHint": "switch to english"
+    }
+  },
+  "status": {
+    "location": "florianópolis · sc · br",
+    "available": "disponível para projetos",
+    "access": "acesso"
+  }
+}
