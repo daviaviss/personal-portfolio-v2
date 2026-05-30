@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const scrollTo = (id: string) =>
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -14,6 +15,12 @@ const ParticlesCanvas = dynamic(
     import("@/components/three/ParticlesCanvas").then(
       (m) => m.ParticlesCanvas
     ),
+  { ssr: false }
+);
+
+const DollarCanvas = dynamic(
+  () =>
+    import("@/components/three/DollarCanvas").then((m) => m.DollarCanvas),
   { ssr: false }
 );
 
@@ -28,6 +35,7 @@ const fadeUp = (delay = 0) => ({
 export function Hero() {
   const t = useTranslations("hero");
   const [mounted, setMounted] = useState(false);
+  const hideDollar = useIsMobile(1024);
 
   useEffect(() => {
     const id = setTimeout(() => setMounted(true), 100);
@@ -48,6 +56,10 @@ export function Hero() {
     >
       {/* Three.js canvas — lazy loaded */}
       {mounted && <ParticlesCanvas />}
+
+      {/* Particle "$" — full-bleed canvas, the symbol is placed at the
+          container's right edge inside the scene. Hidden on small screens. */}
+      {mounted && !hideDollar && <DollarCanvas />}
 
       {/* Warm radial glow */}
       <div
