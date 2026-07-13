@@ -135,39 +135,6 @@ export function Hero() {
           width: "100%",
         }}
       >
-        {/* Available badge */}
-        <motion.div {...fadeUp(0.2)}>
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "var(--fs-micro)",
-              letterSpacing: "var(--tracking-wider)",
-              textTransform: "uppercase",
-              color: "var(--fg-3)",
-              marginBottom: 32,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 10,
-              border: "1px solid var(--border)",
-              borderRadius: "var(--r-full)",
-              padding: "5px 14px 5px 10px",
-              background: "var(--bg-raised)",
-            }}
-          >
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: "var(--signal-green)",
-                boxShadow: "0 0 8px var(--signal-green)",
-                flexShrink: 0,
-              }}
-            />
-            {t("badge")}
-          </div>
-        </motion.div>
-
         {/* Headline */}
         <motion.h1
           {...fadeUp(0.35)}
@@ -258,6 +225,16 @@ export function Hero() {
               background: "var(--bg-raised)",
               color: "var(--fg-3)",
               fontFamily: "var(--font-mono)",
+              transition:
+                "border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--accent)";
+              e.currentTarget.style.color = "var(--accent)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--border)";
+              e.currentTarget.style.color = "var(--fg-3)";
             }}
           >
             ⌘+K

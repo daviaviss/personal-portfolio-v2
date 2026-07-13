@@ -337,6 +337,16 @@ export function CommandPalette() {
                   padding: "2px 6px",
                   background: "var(--bg-raised)",
                   cursor: "pointer",
+                  transition:
+                    "border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "var(--accent)";
+                  e.currentTarget.style.color = "var(--accent)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--border)";
+                  e.currentTarget.style.color = "var(--fg-3)";
                 }}
               >
                 esc

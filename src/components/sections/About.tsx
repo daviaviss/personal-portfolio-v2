@@ -88,7 +88,7 @@ export function About() {
             }}
           >
             <Image
-              src="/davi-portrait.jpg"
+              src="/davi-portrait.jpeg"
               alt="Davi Vissotto"
               width={188}
               height={188}
@@ -96,7 +96,7 @@ export function About() {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                objectPosition: "center 20%",
+                objectPosition: "center 35%",
                 filter: "sepia(0.12) saturate(1.1) contrast(1.03)",
               }}
               priority

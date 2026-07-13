@@ -97,7 +97,14 @@ export function Nav() {
     >
       {/* Logo */}
       <button
-        onClick={() => router.push(`${prefix}/`)}
+        onClick={() => {
+          const cleanPath = pathname.replace(/^\/en/, "") || "/";
+          if (cleanPath === "/") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } else {
+            router.push(`${prefix}/`);
+          }
+        }}
         aria-label="Home"
         style={{
           background: "none",
