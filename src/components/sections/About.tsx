@@ -88,7 +88,7 @@ export function About() {
             }}
           >
             <Image
-              src="/davi-portrait.jpeg"
+              src="/davi-portrait.png"
               alt="Davi Vissotto"
               width={188}
               height={188}
