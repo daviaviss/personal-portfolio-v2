@@ -25,7 +25,7 @@ export function StatusLine() {
   }, [locale]);
 
   return (
-    <div
+    <footer
       style={{
         position: "fixed",
         bottom: 0,
@@ -36,7 +36,10 @@ export function StatusLine() {
         background: "var(--status-bg)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
+        minHeight: "var(--status-h)",
         padding: "6px 24px",
+        flexWrap: "wrap",
+        rowGap: 2,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -45,28 +48,27 @@ export function StatusLine() {
         letterSpacing: "var(--tracking-wider)",
         textTransform: "uppercase",
         color: "var(--fg-3)",
-        userSelect: "none",
       }}
     >
       <span>
-        <span style={{ color: "var(--accent)", marginRight: 8 }}>▸</span>
+        <span aria-hidden style={{ color: "var(--accent)", marginRight: 8 }}>▸</span>
         daviaviss
-        <span style={{ color: "var(--accent)" }}>/</span>
+        <span aria-hidden style={{ color: "var(--accent)" }}>/</span>
       </span>
 
       <span style={{ display: "flex", alignItems: "center", gap: 16 }}>
         {!isMobile && (
           <>
             <span>{t("location")}</span>
-            <span style={{ color: "var(--fg-3)" }}>|</span>
+            <span aria-hidden style={{ color: "var(--fg-3)" }}>|</span>
             <span>{t("available")}</span>
-            <span style={{ color: "var(--fg-3)" }}>|</span>
+            <span aria-hidden style={{ color: "var(--fg-3)" }}>|</span>
           </>
         )}
         <span>
           {t("access")}: {time}
         </span>
       </span>
-    </div>
+    </footer>
   );
 }

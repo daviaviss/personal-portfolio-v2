@@ -1,101 +1,63 @@
 {
-  "nav": {
-    "home": "/",
-    "about": "about",
-    "stack": "stack",
-    "exp": "exp",
-    "projetos": "projects",
-    "contato": "contact"
+  "profile": {
+    "name": "davi augusto vissotto",
+    "bio": [
+      "software engineer",
+      "ci&t"
+    ],
+    "photoAlt": "portrait of davi augusto vissotto"
   },
-  "hero": {
-    "badge": "available for projects",
-    "headline1": "davi,",
-    "headline2": "dev",
-    "headline3": "&",
-    "headline4": "enthusiast.",
-    "lead": "I build impactful interfaces — next, expo, react. currently mid-level developer at",
-    "company": "ci&t",
-    "cta1": "▸ see projects",
-    "cta2": "reach out →",
-    "palette": "command palette",
-    "scroll": "scroll"
-  },
-  "about": {
-    "label": "about",
-    "title": "who am i.",
-    "p1": "my name is davi augusto vissotto.",
-    "p2": "I started coding in 2019, after getting interested in an html book. never stopped. today I study information systems at ufsc and work as a frontend developer at ci&t.",
-    "p3": "I work with next, expo and react. I believe collaboration is what turns good ideas into real products. I prefer to work on projects that have a positive impact on society.",
-    "location": "florianópolis · sc · br"
-  },
-  "projects": {
-    "label": "projects",
-    "title": "what I built.",
-    "featured": "featured",
-    "wip": "coming soon"
-  },
-  "stack": {
-    "label": "tools",
-    "title": "main stack.",
-    "groups": {
-      "frameworks": "frameworks",
-      "languages": "languages",
-      "styling": "styling",
-      "tools": "tools"
-    }
-  },
-  "experience": {
-    "label": "experience",
-    "title": "my trajectory.",
-    "education": "education",
-    "current": "current"
-  },
-  "contact": {
-    "label": "contact",
-    "title": "reach out.",
-    "direct": "— direct",
-    "elsewhere": "— elsewhere",
+  "links": {
+    "label": "— where to find me",
+    "email": "email",
+    "linkedin": "linkedin",
+    "github": "github",
+    "instagram": "instagram",
+    "whatsapp": "whatsapp",
     "copy": "copy",
-    "copied": "✓ copied"
+    "copied": "copied",
+    "open": "opens in a new tab",
+    "failed": "could not copy"
+  },
+  "actions": {
+    "palette": "command palette",
+    "switchTo": "switch to {lang}",
+    "prefs": "preferences",
+    "themeToDark": "switch to dark theme",
+    "themeToLight": "switch to light theme"
   },
   "palette": {
-    "placeholder": "commands, sections, actions...",
+    "placeholder": "links, actions...",
     "navigate": "↑↓ navigate",
     "select": "↵ select",
     "close": "esc close",
     "notFound": "- nothing found",
     "commands": {
-      "home": "▸ home",
-      "homeHint": "go to top",
-      "about": "▸ about",
-      "aboutHint": "who am i",
-      "stack": "▸ stack",
-      "stackHint": "my stack",
-      "exp": "▸ experience",
-      "expHint": "my trajectory",
-      "projetos": "▸ projects",
-      "projetosHint": "what I built",
-      "contato": "▸ contact",
-      "contatoHint": "reach out",
-      "email": "⧉ email",
+      "email": "email",
       "emailHint": "daviaugustovissotto@gmail.com",
-      "linkedin": "↗ linkedin",
+      "linkedin": "linkedin",
       "linkedinHint": "/in/daviaviss",
-      "github": "↗ github",
+      "github": "github",
       "githubHint": "@daviaviss",
-      "instagram": "↗ instagram",
+      "instagram": "instagram",
       "instagramHint": "@daviaviss",
-      "whatsapp": "↗ whatsapp",
+      "whatsapp": "whatsapp",
       "whatsappHint": "+55 48 98461-6370",
-      "theme": "◑ toggle theme",
-      "themeHint": "dark / light",
-      "lang": "◎ português",
-      "langHint": "mudar para português"
-    }
+      "theme": "toggle theme",
+      "themeHint": "dark / light"
+    },
+    "title": "command palette",
+    "inputLabel": "search links and actions",
+    "results": "{n} results",
+    "resultsLabel": "results"
   },
   "status": {
     "location": "florianópolis · sc · br",
     "available": "available for projects",
     "access": "access"
+  },
+  "locales": {
+    "pt": "portuguese",
+    "en": "english"
   }
 }

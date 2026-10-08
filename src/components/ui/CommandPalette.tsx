@@ -1,183 +1,78 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { useTranslations, useLocale } from "next-intl";
+import { useState, useEffect, useId, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
+import { copyText } from "@/lib/clipboard";
+import { toggleTheme } from "@/lib/theme";
+import { LINKS } from "@/lib/links";
+import { OPEN_PALETTE } from "@/lib/events";
+import { useLocaleSwitch } from "@/components/providers/LocaleProvider";
+import { LOCALES } from "@/i18n/config";
 
 interface Command {
   id: string;
   label: string;
   hint: string;
+  glyph: string;
   action: () => void;
 }
 
-const EMAIL = "daviaugustovissotto@gmail.com";
+const FOCUSABLE = 'input, button:not([disabled]):not([tabindex="-1"])';
 
 export function CommandPalette() {
   const t = useTranslations("palette");
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
+  const ta = useTranslations("actions");
+  const tLocales = useTranslations("locales");
+  const { locale, setLocale } = useLocaleSwitch();
+  const titleId = useId();
+  const listId = useId();
 
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
 
-  const prefix = locale === "en" ? "/en" : "";
-
-  const scrollTo = useCallback(
-    (anchor: string) => {
-      setOpen(false);
-      const cleanPath = pathname.replace(/^\/en/, "") || "/";
-      if (cleanPath === "/") {
-        setTimeout(
-          () =>
-            document
-              .getElementById(anchor)
-              ?.scrollIntoView({ behavior: "smooth" }),
-          80
-        );
-      } else {
-        router.push(`${prefix}/`);
-        setTimeout(
-          () =>
-            document
-              .getElementById(anchor)
-              ?.scrollIntoView({ behavior: "smooth" }),
-          500
-        );
-      }
-    },
-    [pathname, prefix, router]
-  );
-
-  const navigateHome = useCallback(() => {
-    router.push(`${prefix}/`);
-    setOpen(false);
-  }, [router, prefix]);
-
-  const toggleTheme = () => {
-    const h = document.documentElement;
-    const next = h.dataset.theme === "light" ? "" : "light";
-    // eslint-disable-next-line react-hooks/immutability
-    h.dataset.theme = next;
-    // eslint-disable-next-line react-hooks/immutability
-    document.cookie = `theme=${next};path=/;max-age=31536000;SameSite=Lax`;
-    try {
-      if (next === "light") localStorage.setItem("theme", "light");
-      else localStorage.removeItem("theme");
-    } catch {}
-  };
-
-  const toggleLang = () => {
-    const next = locale === "pt" ? "en" : "pt";
-    // eslint-disable-next-line react-hooks/immutability
-    document.cookie = `NEXT_LOCALE=${next};path=/;max-age=31536000;SameSite=Lax`;
-    router.push(next === "en" ? "/en" : "/");
-    setOpen(false);
-  };
-
-  // Order mirrors the page section order
   const commands: Command[] = [
-    {
-      id: "home",
-      label: t("commands.home"),
-      hint: t("commands.homeHint"),
-      action: () => navigateHome(),
-    },
-    {
-      id: "about",
-      label: t("commands.about"),
-      hint: t("commands.aboutHint"),
-      action: () => scrollTo("about"),
-    },
-    {
-      id: "stack",
-      label: t("commands.stack"),
-      hint: t("commands.stackHint"),
-      action: () => scrollTo("stack"),
-    },
-    {
-      id: "exp",
-      label: t("commands.exp"),
-      hint: t("commands.expHint"),
-      action: () => scrollTo("experience"),
-    },
-    {
-      id: "projetos",
-      label: t("commands.projetos"),
-      hint: t("commands.projetosHint"),
-      action: () => scrollTo("projects"),
-    },
-    {
-      id: "contato",
-      label: t("commands.contato"),
-      hint: t("commands.contatoHint"),
-      action: () => scrollTo("contact"),
-    },
-    {
-      id: "email",
-      label: t("commands.email"),
-      hint: t("commands.emailHint"),
+    ...LINKS.map((link) => ({
+      id: link.id,
+      label: t(`commands.${link.id}`),
+      hint: t(`commands.${link.id}Hint`),
+      glyph: link.kind === "copy" ? "⧉" : "↗",
       action: () => {
-        navigator.clipboard?.writeText(EMAIL);
+        if (link.kind === "link") {
+          window.open(link.href, "_blank", "noopener,noreferrer");
+        } else {
+          void copyText(link.value);
+        }
         setOpen(false);
       },
-    },
-    {
-      id: "linkedin",
-      label: t("commands.linkedin"),
-      hint: t("commands.linkedinHint"),
-      action: () => {
-        window.open("https://linkedin.com/in/daviaviss", "_blank");
-        setOpen(false);
-      },
-    },
-    {
-      id: "github",
-      label: t("commands.github"),
-      hint: t("commands.githubHint"),
-      action: () => {
-        window.open("https://github.com/daviaviss", "_blank");
-        setOpen(false);
-      },
-    },
-    {
-      id: "instagram",
-      label: t("commands.instagram"),
-      hint: t("commands.instagramHint"),
-      action: () => {
-        window.open("https://www.instagram.com/daviaviss/", "_blank");
-        setOpen(false);
-      },
-    },
-    {
-      id: "whatsapp",
-      label: t("commands.whatsapp"),
-      hint: t("commands.whatsappHint"),
-      action: () => {
-        window.open("https://wa.me/5548984616370", "_blank");
-        setOpen(false);
-      },
-    },
+    })),
     {
       id: "theme",
       label: t("commands.theme"),
       hint: t("commands.themeHint"),
+      glyph: "◑",
       action: () => {
         toggleTheme();
         setOpen(false);
       },
     },
-    {
-      id: "lang",
-      label: t("commands.lang"),
-      hint: t("commands.langHint"),
-      action: toggleLang,
-    },
+    ...LOCALES.filter((loc) => loc !== locale)
+      .map((loc) => ({
+        id: `locale-${loc}`,
+        label: tLocales(loc),
+        hint: ta("switchTo", { lang: tLocales(loc) }),
+        glyph: "◎",
+        action: () => {
+          setLocale(loc);
+          setOpen(false);
+        },
+      })),
   ];
 
   const filtered = query
@@ -188,26 +83,34 @@ export function CommandPalette() {
       )
     : commands;
 
+  const activeId = filtered[selected]
+    ? `${listId}-${filtered[selected].id}`
+    : undefined;
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        setOpen((v) => !v);
+        setOpen((v) => {
+          if (!v) openerRef.current = document.activeElement as HTMLElement;
+          return !v;
+        });
         setQuery("");
         setSelected(0);
       }
       if (e.key === "Escape") setOpen(false);
     };
     const onOpen = () => {
+      openerRef.current = document.activeElement as HTMLElement;
       setOpen(true);
       setQuery("");
       setSelected(0);
     };
     window.addEventListener("keydown", onKey);
-    document.addEventListener("open-palette", onOpen);
+    document.addEventListener(OPEN_PALETTE, onOpen);
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.removeEventListener("open-palette", onOpen);
+      document.removeEventListener(OPEN_PALETTE, onOpen);
     };
   }, []);
 
@@ -217,15 +120,53 @@ export function CommandPalette() {
     return () => clearTimeout(id);
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+
+    const siblings = Array.from(document.body.children).filter(
+      (el) => el !== overlayRef.current && !el.contains(overlayRef.current)
+    ) as HTMLElement[];
+    const wasInert = siblings.map((el) => el.inert);
+    siblings.forEach((el) => {
+      el.inert = true;
+    });
+
+    const bodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const opener = openerRef.current;
+    return () => {
+      siblings.forEach((el, i) => {
+        el.inert = wasInert[i];
+      });
+      document.body.style.overflow = bodyOverflow;
+      opener?.focus?.();
+    };
+  }, [open]);
 
   useEffect(() => {
-    const list = listRef.current;
-    if (!list) return;
-    const item = list.querySelectorAll("button")[selected];
+    const item = listRef.current?.querySelectorAll("[role='option']")[selected];
     item?.scrollIntoView({ block: "nearest" });
   }, [selected]);
 
-  const onKey = (e: React.KeyboardEvent) => {
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Tab") {
+      const nodes = dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE);
+      if (!nodes?.length) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+      return;
+    }
+
+    if (!filtered.length) return;
+
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelected((i) => (i + 1) % filtered.length);
@@ -242,6 +183,7 @@ export function CommandPalette() {
       {open && (
         <motion.div
           key="overlay"
+          ref={overlayRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -262,6 +204,11 @@ export function CommandPalette() {
         >
           <motion.div
             key="palette"
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            onKeyDown={onKeyDown}
             initial={{ opacity: 0, scale: 0.95, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 8 }}
@@ -277,6 +224,10 @@ export function CommandPalette() {
               position: "relative",
             }}
           >
+            <h2 id={titleId} className="sr-only">
+              {t("title")}
+            </h2>
+
             <div
               aria-hidden
               style={{
@@ -289,7 +240,6 @@ export function CommandPalette() {
               }}
             />
 
-            {/* Input */}
             <div
               style={{
                 display: "flex",
@@ -300,6 +250,7 @@ export function CommandPalette() {
               }}
             >
               <span
+                aria-hidden
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 15,
@@ -312,9 +263,17 @@ export function CommandPalette() {
               <input
                 ref={inputRef}
                 value={query}
-                onChange={(e) => { setQuery(e.target.value); setSelected(0); }}
-                onKeyDown={onKey}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setSelected(0);
+                }}
                 placeholder={t("placeholder")}
+                aria-label={t("inputLabel")}
+                role="combobox"
+                aria-expanded
+                aria-controls={listId}
+                aria-activedescendant={activeId}
+                aria-autocomplete="list"
                 style={{
                   background: "transparent",
                   border: "none",
@@ -323,20 +282,26 @@ export function CommandPalette() {
                   fontSize: 15,
                   color: "var(--fg-1)",
                   flex: 1,
+                  minWidth: 0,
                   caretColor: "var(--accent)",
                 }}
               />
-              <kbd
+              <button
+                type="button"
                 onClick={() => setOpen(false)}
+                aria-label={t("close")}
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 10,
                   color: "var(--fg-3)",
                   border: "1px solid var(--border)",
                   borderRadius: "var(--r-1)",
-                  padding: "2px 6px",
+                  minWidth: 32,
+                  minHeight: 26,
+                  padding: "4px 8px",
                   background: "var(--bg-raised)",
                   cursor: "pointer",
+                  flexShrink: 0,
                   transition:
                     "border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
                 }}
@@ -350,12 +315,14 @@ export function CommandPalette() {
                 }}
               >
                 esc
-              </kbd>
+              </button>
             </div>
 
-            {/* Results */}
             <div
               ref={listRef}
+              id={listId}
+              role="listbox"
+              aria-label={t("resultsLabel")}
               style={{
                 maxHeight: 340,
                 overflowY: "auto",
@@ -364,22 +331,15 @@ export function CommandPalette() {
                 scrollbarColor: "var(--border) transparent",
               }}
             >
-              {filtered.length === 0 && (
-                <div
-                  style={{
-                    padding: "20px 18px",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 13,
-                    color: "var(--fg-3)",
-                    textAlign: "center",
-                  }}
-                >
-                  {t("notFound")}
-                </div>
-              )}
               {filtered.map((cmd, i) => (
                 <button
                   key={cmd.id}
+                  type="button"
+                  id={`${listId}-${cmd.id}`}
+                  role="option"
+                  aria-selected={i === selected}
+                  tabIndex={-1}
+                  className="palette-option"
                   onClick={() => cmd.action()}
                   onMouseEnter={() => setSelected(i)}
                   style={{
@@ -387,10 +347,8 @@ export function CommandPalette() {
                     alignItems: "center",
                     justifyContent: "space-between",
                     width: "100%",
-                    padding: "10px 18px",
-                    background:
-                      i === selected ? "var(--accent-soft)" : "transparent",
-                    border: "none",
+                    padding: "10px 16px",
+                    background: "transparent",
                     cursor: "pointer",
                     transition: "background var(--dur-fast) var(--ease-out)",
                     gap: 16,
@@ -398,19 +356,25 @@ export function CommandPalette() {
                 >
                   <span
                     style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
                       fontFamily: "var(--font-mono)",
                       fontSize: 14,
                       color: i === selected ? "var(--fg-1)" : "var(--fg-2)",
                       textAlign: "left",
                     }}
                   >
-                    {cmd.label}
+                    <span aria-hidden style={{ color: "var(--fg-3)" }}>
+                      {cmd.glyph}
+                    </span>
+                    <span>{cmd.label}</span>
                   </span>
                   <span
                     style={{
                       fontFamily: "var(--font-mono)",
                       fontSize: 11,
-                      color: "var(--fg-3)",
+                      color: "var(--fg-meta)",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -421,10 +385,28 @@ export function CommandPalette() {
                   </span>
                 </button>
               ))}
+
+              {filtered.length === 0 && (
+                <div
+                  style={{
+                    padding: "20px 18px",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 13,
+                    color: "var(--fg-2)",
+                    textAlign: "center",
+                  }}
+                >
+                  {t("notFound")}
+                </div>
+              )}
             </div>
 
-            {/* Footer */}
+            <span role="status" className="sr-only">
+              {t("results", { n: filtered.length })}
+            </span>
+
             <div
+              aria-hidden
               style={{
                 padding: "8px 18px",
                 borderTop: "1px solid var(--border)",
@@ -432,7 +414,7 @@ export function CommandPalette() {
                 gap: 16,
                 fontFamily: "var(--font-mono)",
                 fontSize: 10,
-                color: "var(--fg-3)",
+                color: "var(--fg-2)",
                 letterSpacing: "0.08em",
               }}
             >
