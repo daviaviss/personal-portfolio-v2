@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { copyText } from "@/lib/clipboard";
 import { toggleTheme } from "@/lib/theme";
+import { toggleAmbient } from "@/lib/ambient";
 import { LINKS } from "@/lib/links";
 import { OPEN_PALETTE } from "@/lib/events";
 import { useLocaleSwitch } from "@/components/providers/LocaleProvider";
@@ -52,16 +53,6 @@ export function CommandPalette() {
         setOpen(false);
       },
     })),
-    {
-      id: "theme",
-      label: t("commands.theme"),
-      hint: t("commands.themeHint"),
-      glyph: "◑",
-      action: () => {
-        toggleTheme();
-        setOpen(false);
-      },
-    },
     ...LOCALES.filter((loc) => loc !== locale)
       .map((loc) => ({
         id: `locale-${loc}`,
@@ -73,6 +64,26 @@ export function CommandPalette() {
           setOpen(false);
         },
       })),
+    {
+      id: "music",
+      label: t("commands.music"),
+      hint: t("commands.musicHint"),
+      glyph: "♪",
+      action: () => {
+        toggleAmbient();
+        setOpen(false);
+      },
+    },
+    {
+      id: "theme",
+      label: t("commands.theme"),
+      hint: t("commands.themeHint"),
+      glyph: "◑",
+      action: () => {
+        toggleTheme();
+        setOpen(false);
+      },
+    },
   ];
 
   const filtered = query

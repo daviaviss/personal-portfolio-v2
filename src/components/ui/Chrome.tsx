@@ -4,7 +4,9 @@ import { Fragment } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { useIsLightTheme } from "@/hooks/useIsLightTheme";
+import { useAmbientPlaying } from "@/hooks/useAmbientPlaying";
 import { toggleTheme } from "@/lib/theme";
+import { toggleAmbient } from "@/lib/ambient";
 import { useLocaleSwitch } from "@/components/providers/LocaleProvider";
 import { HTML_LANG, LOCALES } from "@/i18n/config";
 
@@ -13,6 +15,7 @@ export function Chrome({ initialLight }: { initialLight: boolean }) {
   const tLocales = useTranslations("locales");
   const { locale, setLocale } = useLocaleSwitch();
   const isLight = useIsLightTheme(initialLight);
+  const isPlaying = useAmbientPlaying();
 
   return (
     <motion.div
@@ -50,6 +53,20 @@ export function Chrome({ initialLight }: { initialLight: boolean }) {
           </Fragment>
         );
       })}
+
+      <button
+        type="button"
+        className="chrome__btn chrome__music"
+        onClick={toggleAmbient}
+        data-playing={isPlaying ? "" : undefined}
+        aria-label={isPlaying ? t("musicPause") : t("musicPlay")}
+      >
+        <span aria-hidden className="chrome__bars">
+          <i />
+          <i />
+          <i />
+        </span>
+      </button>
 
       <button
         type="button"

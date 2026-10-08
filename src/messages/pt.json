@@ -24,7 +24,9 @@
     "switchTo": "mudar para {lang}",
     "prefs": "preferências",
     "themeToDark": "mudar para o tema escuro",
-    "themeToLight": "mudar para o tema claro"
+    "themeToLight": "mudar para o tema claro",
+    "musicPlay": "tocar música ambiente",
+    "musicPause": "pausar música ambiente"
   },
   "palette": {
     "placeholder": "links, ações...",
@@ -44,7 +46,9 @@
       "whatsapp": "whatsapp",
       "whatsappHint": "+55 48 98461-6370",
       "theme": "alternar tema",
-      "themeHint": "escuro / claro"
+      "themeHint": "escuro / claro",
+      "music": "música ambiente",
+      "musicHint": "tocar / pausar"
     },
     "title": "paleta de comandos",
     "inputLabel": "buscar links e ações",

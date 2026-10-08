@@ -401,7 +401,8 @@ a:hover { color: var(--accent); }
   color: var(--fg-3);
 }
 
-.chrome__theme {
+.chrome__theme,
+.chrome__music {
   width: 36px;
   height: 36px;
   padding: 0;
@@ -409,10 +410,44 @@ a:hover { color: var(--accent); }
 }
 
 @media (min-width: 768px) {
-  .chrome__theme { width: 28px; height: 28px; }
+  .chrome__theme,
+  .chrome__music { width: 28px; height: 28px; }
 }
 
-.chrome__theme:hover { color: var(--accent); }
+.chrome__theme:hover,
+.chrome__music:hover,
+.chrome__music[data-playing] { color: var(--accent); }
+
+.chrome__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+
+.chrome__bars > i {
+  width: 2px;
+  height: 100%;
+  background: currentColor;
+  border-radius: 1px;
+  transform-origin: bottom;
+  transform: scaleY(0.3);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.chrome__bars > i:nth-child(2) { transform: scaleY(0.55); }
+
+.chrome__music[data-playing] .chrome__bars > i {
+  animation: eqBar 1.4s ease-in-out infinite;
+}
+
+.chrome__music[data-playing] .chrome__bars > i:nth-child(2) { animation-delay: -0.5s; }
+.chrome__music[data-playing] .chrome__bars > i:nth-child(3) { animation-delay: -0.9s; }
+
+@keyframes eqBar {
+  0%, 100% { transform: scaleY(0.3); }
+  50%      { transform: scaleY(1); }
+}
 
 .chrome__theme > span {
   display: block;

@@ -24,7 +24,9 @@
     "switchTo": "switch to {lang}",
     "prefs": "preferences",
     "themeToDark": "switch to dark theme",
-    "themeToLight": "switch to light theme"
+    "themeToLight": "switch to light theme",
+    "musicPlay": "play ambient music",
+    "musicPause": "pause ambient music"
   },
   "palette": {
     "placeholder": "links, actions...",
@@ -44,7 +46,9 @@
       "whatsapp": "whatsapp",
       "whatsappHint": "+55 48 98461-6370",
       "theme": "toggle theme",
-      "themeHint": "dark / light"
+      "themeHint": "dark / light",
+      "music": "ambient music",
+      "musicHint": "play / pause"
     },
     "title": "command palette",
     "inputLabel": "search links and actions",
