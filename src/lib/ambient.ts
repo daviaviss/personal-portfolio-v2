@@ -41,7 +41,16 @@ function impulse(audio: AudioContext, seconds: number) {
   return buffer;
 }
 
+// iOS trata Web Audio como som "ambient" e silencia no modo silencioso;
+// "playback" faz tocar como mídia (Safari 17+).
+function preferPlaybackSession() {
+  const session = (navigator as Navigator & { audioSession?: { type: string } })
+    .audioSession;
+  if (session) session.type = "playback";
+}
+
 function build() {
+  preferPlaybackSession();
   const audio = new AudioContext();
 
   const out = audio.createGain();

@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Backdrop } from "@/components/linktree/Backdrop";
 import { LinkCard } from "@/components/linktree/LinkCard";
 import { LINKS } from "@/lib/links";
@@ -21,6 +21,7 @@ export function Linktree() {
   const t = useTranslations("profile");
   const tl = useTranslations("links");
   const ta = useTranslations("actions");
+  const locale = useLocale();
 
   const bio = t.raw("bio") as string[];
 
@@ -28,7 +29,8 @@ export function Linktree() {
     <main className="lt-main">
       <Backdrop />
 
-      <div className="lt-col">
+      {/* key remonta a coluna ao trocar de idioma para replay da animação de entrada */}
+      <div className="lt-col" key={locale}>
         <header className="lt-header">
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
