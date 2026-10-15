@@ -11,7 +11,7 @@ const PAD_ATTACK = 3;
 const PAD_RELEASE = 4;
 const LEAD_DECAY = 3;
 const LOOKAHEAD = 1.5;
-const VOLUME = 0.55;
+const VOLUME = 0.09;
 
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
@@ -19,6 +19,7 @@ let padBus: AudioNode | null = null;
 let leadBus: AudioNode | null = null;
 
 let playing = false;
+let userToggled = false;
 let step = 0;
 let nextChordAt = 0;
 let tickId: ReturnType<typeof setInterval> | undefined;
@@ -196,12 +197,44 @@ function stop() {
   }, 1500);
 }
 
-export function toggleAmbient() {
-  playing = !playing;
+function setPlaying(next: boolean) {
+  playing = next;
   if (playing) start();
   else stop();
   listeners.forEach((fn) => fn());
+}
+
+export function toggleAmbient() {
+  userToggled = true;
+  setPlaying(!playing);
   return playing;
+}
+
+const GESTURES = ["click", "keydown", "touchend"] as const;
+
+// Navegadores só liberam áudio após um gesto do usuário. Se a política
+// já permitir, toca na hora; senão, começa no primeiro clique/tecla.
+// Os listeners ficam na fase de bubble do window, então um clique no
+// próprio botão de música (que marca userToggled) vence o autoplay.
+export function autoplayAmbient() {
+  const policy = (
+    navigator as Navigator & { getAutoplayPolicy?: (type: string) => string }
+  ).getAutoplayPolicy?.("audiocontext");
+
+  if (policy === "allowed") {
+    if (!userToggled && !playing) setPlaying(true);
+    return () => {};
+  }
+
+  const onGesture = () => {
+    cleanup();
+    if (!userToggled && !playing) setPlaying(true);
+  };
+  const cleanup = () =>
+    GESTURES.forEach((type) => window.removeEventListener(type, onGesture));
+
+  GESTURES.forEach((type) => window.addEventListener(type, onGesture));
+  return cleanup;
 }
 
 export function subscribeAmbient(onChange: () => void) {

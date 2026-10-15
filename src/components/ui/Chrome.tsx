@@ -1,12 +1,12 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { useIsLightTheme } from "@/hooks/useIsLightTheme";
 import { useAmbientPlaying } from "@/hooks/useAmbientPlaying";
 import { toggleTheme } from "@/lib/theme";
-import { toggleAmbient } from "@/lib/ambient";
+import { autoplayAmbient, toggleAmbient } from "@/lib/ambient";
 import { useLocaleSwitch } from "@/components/providers/LocaleProvider";
 import { HTML_LANG, LOCALES } from "@/i18n/config";
 
@@ -16,6 +16,8 @@ export function Chrome({ initialLight }: { initialLight: boolean }) {
   const { locale, setLocale } = useLocaleSwitch();
   const isLight = useIsLightTheme(initialLight);
   const isPlaying = useAmbientPlaying();
+
+  useEffect(() => autoplayAmbient(), []);
 
   return (
     <motion.div
